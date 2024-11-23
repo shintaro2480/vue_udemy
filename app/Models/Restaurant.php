@@ -9,4 +9,11 @@ class Restaurant extends Model
 {
     /** @use HasFactory<\Database\Factories\RestaurantFactory> */
     use HasFactory;
+
+    //一括代入を可能とする
+    protected $fillable = [
+        'name',
+        'address',
+        'go',
+    ];
 }

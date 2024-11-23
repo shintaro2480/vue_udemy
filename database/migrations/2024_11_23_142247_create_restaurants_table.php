@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
+            $table->string('name');  // レストラン名
+            $table->string('address');  // 住所
+            $table->boolean('go')->default(false);  // 行ったか行ってないか
             $table->timestamps();
         });
     }
