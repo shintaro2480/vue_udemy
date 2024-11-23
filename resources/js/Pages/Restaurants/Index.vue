@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3'; //<Head />でメタ情報を登録するためのタグ
+import { Link } from '@inertiajs/vue3'; //ページを再読み込みさせずリンクさせるためのタグ
 
 //以下で、Inertiaから渡されたデータを扱える
 const props = defineProps({
@@ -22,6 +23,14 @@ const props = defineProps({
 
     <div class="py-12">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+
+        <div class="mt-3 mb-3 ml-3 flex">
+          <Link :href="route('restaurants.create')"
+            :class="'px-4 py-2 bg-indigo-500 text-white border rounded-md font-semibold text-xs'">
+          <i class="fa-solid fa-plus-circle"></i>　商品登録
+          </Link>
+        </div>
+
         <table class="table-auto border border-gray-400 w-10/12 m-3">
           <thead>
             <tr class="bg-gray-100">

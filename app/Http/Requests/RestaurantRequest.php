@@ -11,7 +11,7 @@ class RestaurantRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,29 @@ class RestaurantRequest extends FormRequest
     {
         return [
             //
+            'name' => 'required|string|max:30|min:1',
+            'address' => 'required|string|max:30|min:1',
+            'go' => 'boolean', // 真偽値
+        ];
+    }
+    public function attributes()
+    {
+        return [
+            'name' => '名前',
+            'address' => '住所',
+            'go' => '行ったかどうか',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'name.required' => ':attributeを入力してください。',
+            'name.min' => ':attributeは:min文字以上で入力してください。',
+            'name.max' => ':attributeは:max文字以内で入力してください。',
+            'address.required' => ':attributeを入力してください。',
+            'address.min' => ':attributeは:min文字以上で入力してください。',
+            'address.max' => ':attributeは:max文字以内で入力してください。',
+            'go.required' => ':attributeを入力してください。',
         ];
     }
 }

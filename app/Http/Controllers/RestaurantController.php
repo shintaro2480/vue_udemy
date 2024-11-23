@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Requests\RestaurantRequest;
 
 class RestaurantController extends Controller
 {
@@ -24,14 +25,26 @@ class RestaurantController extends Controller
     public function create()
     {
         //
+        return Inertia::render('Restaurants/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RestaurantRequest $request)
     {
-        //
+        // バリデーション済みデータを取得
+        $validatedData = $request->validated();
+
+        // データを保存
+        Restaurant::create($validatedData);
+
+        // リダイレクトまたはレスポンスを返す
+        return redirect()->route('restaurants.index')->with('success', 'レストランが登録されました！');
+        //dd($request);
+        //$request = new Request($request->input());
+        //$request->save();
+        //return redirect('restaurants');
     }
 
     /**
