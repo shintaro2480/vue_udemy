@@ -1,7 +1,19 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import DangerButton from '@/Components/DangerButton.vue'; //DangerButtonコンポーネントの読み込み
+
 import { Head } from '@inertiajs/vue3'; //<Head />でメタ情報を登録するためのタグ
 import { Link } from '@inertiajs/vue3'; //ページを再読み込みさせずリンクさせるためのタグ
+import { useForm } from '@inertiajs/vue3'; //削除ボタン用にformを使いたいのでインポート
+
+const form = useForm({
+  id: '', //レストラン1件削除用に追加するuseForm。レストランidをLaravelに送りたい
+});
+const deleteRestaurant = (id, name) => {
+  if (confirm("Are you sure to delete " + name + "?")) {
+    form.delete(route('restaurants.destroy', id));
+  }
+}
 
 //以下で、Inertiaから渡されたデータを扱える
 const props = defineProps({
@@ -37,7 +49,7 @@ const props = defineProps({
               <th class="px-4 py-2 w-12">ID</th>
               <th class="px-4 py-2 w-48">レストラン</th>
               <th class="px-4 py-2 w-28">住所</th>
-              <th class="px-4 py-2 w-28 text-center">行ったか</th>
+              <th class="px-4 py-2 w-48 text-center">行ったか</th>
               <th class="px-4 py-2"></th>
               <th class="px-4 py-2"></th>
             </tr>
@@ -48,10 +60,20 @@ const props = defineProps({
               <td class="border border-gray-400 px-4 py-2 text-center">{{ restaurant.id }}</td>
               <td class="border border-gray-400 px-4 py-2">{{ restaurant.name }}</td>
               <td class="border border-gray-400 px-4 py-2 text-center">{{ restaurant.address }}</td>
-              <td class="border border-gray-400 px-4 py-2 text-right">{{ restaurant.go }}</td>
-              <td class="border border-gray-400 px-4 py-2 text-center">
+              <td class="border border-gray-400 px-4 py-2 text-right">
+
+                {{ restaurant.go ? '行った' : '行ったことない' }}
               </td>
               <td class="border border-gray-400 px-4 py-2 text-center">
+                <Link :href="route('restaurants.edit', restaurant.id)"
+                  :class="'px-4 py-2 bg-indigo-500 text-white border rounded-md text-xs'">
+                <i class="fa-solid fa-edit mr-1"></i>変更
+                </Link>
+              </td>
+              <td class="border border-gray-400 px-4 py-2 text-center">
+                <DangerButton @click="deleteRestaurant(restaurant.id, restaurant.name)">
+                  <i class="fa-solid fa-trash"></i>
+                </DangerButton>
               </td>
             </tr>
           </tbody>

@@ -16,4 +16,9 @@ class Restaurant extends Model
         'address',
         'go',
     ];
+
+    // ここに$castsを記載します
+    protected $casts = [
+        'go' => 'boolean', // 'go'カラムをboolean型として扱う
+    ];
 }

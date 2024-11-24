@@ -6,17 +6,23 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import SelectInput from '@/Components/SelectInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import DangerButton from 'vendor/laravel/breeze/stubs/inertia-react/resources/js/Components/DangerButton';
 const goes = [{ id: true, name: '行った' }, { id: false, name: 'まだ行ってない' }];
 
+const props =
+  defineProps({
+    restaurant: {
+      type: Object,
+    },
+  });
+
 const form = useForm({
-  name: '',
-  address: '',
-  go: '',
+  name: props.restaurant.name,
+  address: props.restaurant.address,
+  go: props.restaurant.go,
 });
 
 const submit = () => {
-  form.post(route('restaurants.store'), {
+  form.patch(route('restaurants.update', props.restaurant), {
     onSuccess: () => form.reset('name', 'address', 'go'),
   });
 };
@@ -24,17 +30,17 @@ const submit = () => {
 
 <template>
 
-  <Head title="商品登録" />
+  <Head title="レストラン編集" />
 
   <AuthenticatedLayout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">商品登録</h2>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">レストラン編集</h2>
     </template>
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <div class="p-6 text-gray-900">商品登録</div>
+          <div class="p-6 text-gray-900">レストラン編集</div>
         </div>
 
         <div class="mt-3 mb-3 ml-3 flex">
@@ -62,13 +68,13 @@ const submit = () => {
           <div class="mt-4">
             <InputLabel for="go" value="行ったことあるか" />
             <SelectInput :options="goes" id="go" class="mt-1 block w-full" v-model="form.go" required
-              autocomplete="tax" />
+              autocomplete="go" />
             <InputError class="mt-2" :message="form.errors.go" />
           </div>
 
           <div class="flex items-center justify-end mt-4">
             <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-              登録
+              更新
             </PrimaryButton>
           </div>
         </form>

@@ -44,7 +44,7 @@ class RestaurantController extends Controller
         //dd($request);
         //$request = new Request($request->input());
         //$request->save();
-        //return redirect('restaurants');
+        return redirect('restaurants');
     }
 
     /**
@@ -61,14 +61,17 @@ class RestaurantController extends Controller
     public function edit(Restaurant $restaurant)
     {
         //
+        return Inertia::render('Restaurants/Edit', ['restaurant' => $restaurant]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Restaurant $restaurant)
+    public function update(RestaurantRequest $request, Restaurant $restaurant)
     {
         //
+        $restaurant->update($request->input());
+        return redirect('restaurants');
     }
 
     /**
@@ -77,5 +80,7 @@ class RestaurantController extends Controller
     public function destroy(Restaurant $restaurant)
     {
         //
+        $restaurant->delete();
+        return redirect('restaurants');
     }
 }
