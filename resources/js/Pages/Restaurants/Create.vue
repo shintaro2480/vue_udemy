@@ -6,7 +6,6 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import SelectInput from '@/Components/SelectInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import DangerButton from 'vendor/laravel/breeze/stubs/inertia-react/resources/js/Components/DangerButton';
 const goes = [{ id: true, name: '行った' }, { id: false, name: 'まだ行ってない' }];
 
 const form = useForm({
