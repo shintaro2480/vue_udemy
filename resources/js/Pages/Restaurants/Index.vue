@@ -43,13 +43,13 @@ const props = defineProps({
           </Link>
         </div>
 
-        <table class="table-auto border border-gray-400 w-10/12 m-3">
+        <table class="table-auto border border-gray-400 w-full m-3">
           <thead>
             <tr class="bg-gray-100">
-              <th class="px-4 py-2 w-12">ID</th>
-              <th class="px-4 py-2 w-48">レストラン</th>
-              <th class="px-4 py-2 w-28">住所</th>
-              <th class="px-4 py-2 w-48 text-center">行ったか</th>
+              <th class="px-4 py-2 w-12 text-left">ID</th>
+              <th class="px-4 py-2 w-48 text-left">レストラン</th>
+              <th class="px-4 py-2 w-38 text-left">住所</th>
+              <th class="px-4 py-2 w-28 text-left">行ったか</th>
               <th class="px-4 py-2"></th>
               <th class="px-4 py-2"></th>
             </tr>
@@ -57,10 +57,10 @@ const props = defineProps({
 
           <tbody>
             <tr v-for="restaurant in restaurants" :key="restaurant.id">
-              <td class="border border-gray-400 px-4 py-2 text-center">{{ restaurant.id }}</td>
-              <td class="border border-gray-400 px-4 py-2">{{ restaurant.name }}</td>
-              <td class="border border-gray-400 px-4 py-2 text-center">{{ restaurant.address }}</td>
-              <td class="border border-gray-400 px-4 py-2 text-right">
+              <td class="border border-gray-400 px-4 py-2 text-left">{{ restaurant.id }}</td>
+              <td class="border border-gray-400 px-4 py-2 text-left">{{ restaurant.name }}</td>
+              <td class="border border-gray-400 px-4 py-2 text-left">{{ restaurant.address }}</td>
+              <td class="border border-gray-400 px-4 py-2 text-left">
 
                 {{ restaurant.go ? '行った' : '行ったことない' }}
               </td>
