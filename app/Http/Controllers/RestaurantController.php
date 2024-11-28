@@ -14,7 +14,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        $restaurants = Restaurant::all();
+        $restaurants = Restaurant::with('user', 'images')->get();
         //dd($restaurants);
         return Inertia::render('Restaurants/Index', ['restaurants' => $restaurants]);
     }
@@ -33,18 +33,31 @@ class RestaurantController extends Controller
      */
     public function store(RestaurantRequest $request)
     {
+
         // バリデーション済みデータを取得
         $validatedData = $request->validated();
 
-        // データを保存
-        Restaurant::create($validatedData);
+        // user_idを設定 (ログインしているユーザーのIDを使用)
+        $validatedData['user_id'] = auth()->id();
+
+        // Restaurantデータを保存
+        $restaurant = Restaurant::create($validatedData);
+
+        // 画像がアップロードされている場合
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                // 画像をストレージに保存
+                $path = $image->store('restaurant_images', 'public');
+
+                // 画像データを restaurant_images テーブルに保存
+                $restaurant->images()->create([
+                    'image_path' => $path,
+                ]);
+            }
+        }
 
         // リダイレクトまたはレスポンスを返す
         return redirect()->route('restaurants.index')->with('success', 'レストランが登録されました！');
-        //dd($request);
-        //$request = new Request($request->input());
-        //$request->save();
-        return redirect('restaurants');
     }
 
     /**

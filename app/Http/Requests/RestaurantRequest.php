@@ -26,6 +26,9 @@ class RestaurantRequest extends FormRequest
             'name' => 'required|string|max:30|min:1',
             'address' => 'required|string|max:30|min:1',
             'go' => 'boolean', // 真偽値
+            'user_id' => 'integer', // 整数
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // 画像のバリデーション
+
         ];
     }
     public function attributes()

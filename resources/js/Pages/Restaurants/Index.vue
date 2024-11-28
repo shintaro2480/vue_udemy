@@ -50,6 +50,8 @@ const props = defineProps({
               <th class="px-4 py-2 w-48 text-left">レストラン</th>
               <th class="px-4 py-2 w-38 text-left">住所</th>
               <th class="px-4 py-2 w-28 text-left">行ったか</th>
+              <th class="px-4 py-2 text-left">投稿者</th>
+              <th class="px-4 py-2">画像</th>
               <th class="px-4 py-2"></th>
               <th class="px-4 py-2"></th>
             </tr>
@@ -64,6 +66,10 @@ const props = defineProps({
 
                 {{ restaurant.go ? '行った' : '行ったことない' }}
               </td>
+              <td class="border border-gray-400 px-4 py-2 text-left">
+                {{ restaurant.user.name }}
+              </td>
+
               <td class="border border-gray-400 px-4 py-2 text-center">
                 <Link :href="route('restaurants.edit', restaurant.id)"
                   :class="'px-4 py-2 bg-indigo-500 text-white border rounded-md text-xs'">
@@ -74,6 +80,11 @@ const props = defineProps({
                 <DangerButton @click="deleteRestaurant(restaurant.id, restaurant.name)">
                   <i class="fa-solid fa-trash"></i>
                 </DangerButton>
+              </td>
+              <td class="border border-gray-400 px-4 py-2 text-center">
+                <div v-for="image in restaurant.images" :key="image.id">
+                  <img :src="`/storage/${image.image_path}`" alt="Restaurant Image" />
+                </div>
               </td>
             </tr>
           </tbody>

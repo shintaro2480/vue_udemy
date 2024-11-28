@@ -12,6 +12,7 @@ const form = useForm({
   name: '',
   address: '',
   go: '',
+  images: [],
 });
 
 const submit = () => {
@@ -19,6 +20,11 @@ const submit = () => {
     onSuccess: () => form.reset('name', 'address', 'go'),
   });
 };
+
+const handleFileChange = (event) => {
+  form.images = Array.from(event.target.files);
+};
+
 </script>
 
 <template>
@@ -43,7 +49,7 @@ const submit = () => {
           </Link>
         </div>
 
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" enctype="multipart/form-data">
           <div class="mt-4">
             <InputLabel for="name" value="名前" />
             <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus
@@ -56,6 +62,11 @@ const submit = () => {
             <TextInput id="address" type="text" class="mt-1 block w-full" v-model="form.address" required
               autocomplete="address" />
             <InputError class="mt-2" :message="form.errors.address" />
+          </div>
+
+          <div>
+            <label for="images">Upload Images:</label>
+            <input type="file" id="images" multiple @change="handleFileChange" />
           </div>
 
           <div class="mt-4">

@@ -20,24 +20,21 @@ class RestaurantSeeder extends Seeder
             'name' => 'レストランＡ',
             'address' => '駅の近く',
             'go' => true,
+            'user_id' => 1,
         ]);
 
         Restaurant::create([
             'name' => 'レストランＢ',
             'address' => '川の近く',
             'go' => false,
+            'user_id' => 1,
         ]);
 
         Restaurant::create([
             'name' => 'レストランＣ',
             'address' => '学校の近く',
             'go' => true,
-        ]);
-
-        Restaurant::create([
-            'name' => 'レストランＤ',
-            'address' => '空港の近く',
-            'go' => false,
+            'user_id' => 1,
         ]);
     }
 }
