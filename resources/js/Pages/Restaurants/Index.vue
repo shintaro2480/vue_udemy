@@ -13,7 +13,7 @@ const form = useForm({
   id: '', //レストラン1件削除用に追加するuseForm。レストランidをLaravelに送りたい
 });
 const deleteRestaurant = (id, name) => {
-  if (confirm("Are you sure to delete " + name + "?")) {
+  if (confirm(name + " を本当に削除しますか?")) {
     form.delete(route('restaurants.destroy', id));
   }
 }
@@ -46,6 +46,7 @@ const props = defineProps({
           </Link>
         </div>
 
+        <!--
         <table class="table-auto border border-gray-400 w-full m-3">
           <thead>
             <tr class="bg-gray-100">
@@ -94,6 +95,60 @@ const props = defineProps({
             </tr>
           </tbody>
         </table>
+      -->
+
+
+
+
+        <section class="text-gray-600 body-font">
+          <div class="container px-5 py-1 mx-auto">
+            <div class="flex flex-wrap -m-4">
+
+
+              <div class="p-4 md:w-1/3" v-for="restaurant in restaurants" :key="restaurant.id">
+                <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+
+
+
+                  <div class="p-6">
+
+                    <div class="min-h-44" style="background-color:#c1b4ac;">
+                      <RestaurantImagesSlider v-if="restaurant.images && restaurant.images.length > 0"
+                        :id="'sliderimage-' + restaurant.id" :images="restaurant.images" />
+                    </div>
+
+                    <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">{{ restaurant.address
+                      }}
+                    </h2>
+                    <h1 class="title-font text-lg font-medium text-gray-900 mb-3">{{ restaurant.name }}</h1>
+                    <p class="leading-relaxed mb-3">{{ restaurant.go ? '行った' : '行ったことない' }}</p>
+                    <div class="flex items-center flex-wrap">
+
+                      <Link :href="route('restaurants.edit', restaurant.id)"
+                        :class="'px-4 py-2 mr-2 bg-indigo-500 active:bg-indigo-700 text-white border rounded-md text-xs'">
+                      <i class="fa-solid fa-edit mr-1"></i>変更
+                      </Link>
+
+                      <DangerButton @click="deleteRestaurant(restaurant.id, restaurant.name)">
+                        <i class="fa-solid fa-trash p-"></i>
+                      </DangerButton>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+        </section>
+
+
+
+
+
+
       </div>
     </div>
 
