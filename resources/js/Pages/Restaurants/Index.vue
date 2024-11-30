@@ -2,6 +2,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import DangerButton from '@/Components/DangerButton.vue'; //DangerButtonコンポーネントの読み込み
 
+import RestaurantImagesSlider from '@/Components/RestaurantImagesSlider.vue';
+
+
 import { Head } from '@inertiajs/vue3'; //<Head />でメタ情報を登録するためのタグ
 import { Link } from '@inertiajs/vue3'; //ページを再読み込みさせずリンクさせるためのタグ
 import { useForm } from '@inertiajs/vue3'; //削除ボタン用にformを使いたいのでインポート
@@ -82,9 +85,11 @@ const props = defineProps({
                 </DangerButton>
               </td>
               <td class="border border-gray-400 px-4 py-2 text-center">
-                <div v-for="image in restaurant.images" :key="image.id">
-                  <img :src="`/storage/${image.image_path}`" alt="Restaurant Image" />
-                </div>
+
+                <RestaurantImagesSlider v-if="restaurant.images && restaurant.images.length > 0"
+                  :id="'slider-' + restaurant.id" :images="restaurant.images" />
+
+
               </td>
             </tr>
           </tbody>
