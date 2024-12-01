@@ -74,17 +74,47 @@ class RestaurantController extends Controller
     public function edit(Restaurant $restaurant)
     {
         //
+        // 画像を関連付けて取得
+        $images = $restaurant->images; // imagesリレーションを利用
+
         return Inertia::render('Restaurants/Edit', ['restaurant' => $restaurant]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(RestaurantRequest $request, Restaurant $restaurant)
+    public function update(Request $request, Restaurant $restaurant)
     {
-        //
-        $restaurant->update($request->input());
-        return redirect('restaurants');
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'go' => 'required|boolean',
+        ]);
+
+        $restaurant->update($data);
+
+        // 削除する画像の処理
+        if ($request->has('imagesToRemove')) {
+            $imagesToRemove = json_decode($request->imagesToRemove, true);
+            foreach ($imagesToRemove as $imageId) {
+                $image = $restaurant->images()->find($imageId);
+                if ($image) {
+                    // ストレージから削除
+                    Storage::delete('public/' . $image->image_path);
+                    $image->delete();
+                }
+            }
+        }
+
+        // 新しい画像の保存
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $path = $file->store('restaurants', 'public');
+                $restaurant->images()->create(['image_path' => $path]);
+            }
+        }
+
+        return redirect()->route('restaurants.index')->with('success', 'レストラン情報を更新しました。');
     }
 
     /**
