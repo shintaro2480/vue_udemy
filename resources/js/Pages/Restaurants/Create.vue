@@ -45,8 +45,8 @@ const submit = () => {
 // ファイル選択時の処理
 const handleFileChange = (event) => {
   const files = Array.from(event.target.files);
-  form.images = files;
-  updatePreviewImages(files);
+  form.images = [...form.images, ...files]; // 既存の画像に追加
+  updatePreviewImages(form.images); // プレビュー画像を更新
 };
 
 // ドラッグ＆ドロップ時の処理
@@ -55,8 +55,8 @@ const handleDrop = (event) => {
   dropActive.value = false; // ドラッグ状態を解除
   if (event.dataTransfer.files) {
     const files = Array.from(event.dataTransfer.files);
-    form.images = files;
-    updatePreviewImages(files);
+    form.images = [...form.images, ...files]; // 既存の画像に追加
+    updatePreviewImages(form.images); // プレビュー画像を更新
   }
 };
 
@@ -81,6 +81,8 @@ const updatePreviewImages = (files) => {
 
 // 画像削除の処理
 const removeImage = (index) => {
+  // プレビューURLを解放
+  URL.revokeObjectURL(previewImages.value[index].url);
   // form.images から削除
   form.images.splice(index, 1);
   // previewImages から削除
