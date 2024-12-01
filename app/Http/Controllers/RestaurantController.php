@@ -73,18 +73,54 @@ class RestaurantController extends Controller
      */
     public function edit(Restaurant $restaurant)
     {
-        //
-        return Inertia::render('Restaurants/Edit', ['restaurant' => $restaurant]);
+        // imagesリレーションをロードし、正しいカラムを選択
+        $restaurant->load(['images' => function ($query) {
+            $query->select(['id', 'restaurant_id', 'image_path', 'created_at', 'updated_at']);
+        }]);
+
+        // フルURLに変換する処理を追加
+        $restaurant->images->each(function ($image) {
+            // 修正: 正しいストレージのパスを取得
+            $image->image_path = asset('storage/' . $image->image_path);
+        });
+
+        return Inertia::render('Restaurants/Edit', [
+            'restaurant' => $restaurant
+        ]);
     }
+
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(RestaurantRequest $request, Restaurant $restaurant)
     {
-        //
-        $restaurant->update($request->input());
-        return redirect('restaurants');
+        // バリデーション済みのリクエストデータを使用
+        $validated = $request->validated();
+
+        // データの更新処理（画像の保存など）
+        $restaurant->update([
+            'name' => $validated['name'],
+            'address' => $validated['address'],
+            'go' => $validated['go'],
+        ]);
+
+        // 削除された画像の処理
+        if ($request->has('deleted_images')) {
+            $deletedImages = $request->input('deleted_images');
+            $images = Image::whereIn('id', $deletedImages)->get();
+
+            foreach ($images as $image) {
+                // ストレージから画像ファイルを削除
+                Storage::delete($image->image_path);
+
+                // データベースから画像を削除
+                $image->delete();
+            }
+        }
+
+        return redirect()->route('restaurants.index')->with('success', 'レストランが更新されました');
     }
 
     /**
