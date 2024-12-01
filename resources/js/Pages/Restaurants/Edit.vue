@@ -45,7 +45,7 @@ const submit = () => {
 
         <div class="mt-3 mb-3 ml-3 flex">
           <Link :href="route('restaurants.index')"
-            :class="'px-4 py-2 bg-indigo-500 text-white border rounded-md font-semibold text-xs'">
+            :class="'px-4 py-2 bg-orange-500 text-white border rounded-md font-semibold text-xs'">
           <i class="fa-solid fa-backward"></i> 戻る
           </Link>
         </div>

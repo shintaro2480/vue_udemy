@@ -41,7 +41,7 @@ const props = defineProps({
 
         <div class="mt-3 mb-3 ml-3 flex">
           <Link :href="route('restaurants.create')"
-            :class="'px-4 py-2 bg-indigo-500 text-white border rounded-md font-semibold text-xs'">
+            :class="'px-4 py-2 bg-orange-500 text-white border rounded-md font-semibold text-xs'">
           <i class="fa-solid fa-plus-circle"></i>　商品登録
           </Link>
         </div>
@@ -76,7 +76,7 @@ const props = defineProps({
 
               <td class="border border-gray-400 px-4 py-2 text-center">
                 <Link :href="route('restaurants.edit', restaurant.id)"
-                  :class="'px-4 py-2 bg-indigo-500 text-white border rounded-md text-xs'">
+                  :class="'px-4 py-2 bg-orange-500 text-white border rounded-md text-xs'">
                 <i class="fa-solid fa-edit mr-1"></i>変更
                 </Link>
               </td>
@@ -125,7 +125,7 @@ const props = defineProps({
                     <div class="flex items-center flex-wrap">
 
                       <Link :href="route('restaurants.edit', restaurant.id)"
-                        :class="'px-4 py-2 mr-2 bg-indigo-500 active:bg-indigo-700 text-white border rounded-md text-xs'">
+                        :class="'px-4 py-2 mr-2 bg-orange-500 active:bg-orange-700 text-white border rounded-md text-xs'">
                       <i class="fa-solid fa-edit mr-1"></i>変更
                       </Link>
 
