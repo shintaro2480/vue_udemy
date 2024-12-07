@@ -130,7 +130,7 @@ const props = defineProps({
                       </Link>
 
                       <DangerButton @click="deleteRestaurant(restaurant.id, restaurant.name)">
-                        <i class="fa-solid fa-trash p-"></i>
+                        <font-awesome-icon :icon="['fas', 'trash-can']" />
                       </DangerButton>
 
                     </div>
