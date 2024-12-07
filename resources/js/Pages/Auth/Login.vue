@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
@@ -15,6 +16,9 @@ defineProps({
         type: String,
     },
 });
+
+// パスワード表示フラグ
+const showPassword = ref(false);
 
 const form = useForm({
     email: '',
@@ -41,19 +45,21 @@ const submit = () => {
         <form @submit.prevent="submit">
             <div>
                 <InputLabel for="email" value="Eメール" />
-
                 <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus
                     autocomplete="username" />
-
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
             <div class="mt-4">
                 <InputLabel for="password" value="パスワード" />
-
-                <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required
-                    autocomplete="current-password" />
-
+                <div class="relative">
+                    <TextInput id="password" :type="showPassword ? 'text' : 'password'" class="mt-1 block w-full"
+                        v-model="form.password" required autocomplete="current-password" />
+                    <button type="button" class="absolute inset-y-0 right-0 px-3 text-sm text-gray-500"
+                        @click="showPassword = !showPassword">
+                        {{ showPassword ? '非表示' : '表示' }}
+                    </button>
+                </div>
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
