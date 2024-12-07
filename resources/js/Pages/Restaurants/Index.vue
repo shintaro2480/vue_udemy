@@ -122,6 +122,9 @@ const props = defineProps({
                     </h2>
                     <h1 class="title-font text-lg font-medium text-gray-900 mb-3">{{ restaurant.name }}</h1>
                     <p class="leading-relaxed mb-3">{{ restaurant.go ? '行った' : '行ったことない' }}</p>
+                    <p class="text-gray-600 text-sm mb-2">
+                      <font-awesome-icon :icon="['fas', 'user']" class="mr-2" />投稿者：{{ restaurant.user.name }}
+                    </p>
                     <div class="flex items-center flex-wrap">
 
                       <Link :href="route('restaurants.edit', restaurant.id)"
