@@ -104,8 +104,14 @@ const showingNavigationDropdown = ref(false);
                 }" class="sm:hidden">
                     <div class="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                            ダッシュボード
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('restaurants.index')"
+                            :active="route().current('restaurants.index')">
+                            行きたいレストラン
+                        </ResponsiveNavLink>
+
+
                     </div>
 
                     <!-- Responsive Settings Options -->
